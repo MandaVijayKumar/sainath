@@ -23,7 +23,7 @@ function App() {
         'Content-Type': 'multipart/form-data'
       }
     }
-    axios.post('http://127.0.0.1:5001/register', formData, config).then(res => {
+    axios.post('https://rayalaseemauniversity.herokuapp.com/register', formData, config).then(res => {
       if (res.data.success) {
         console.log('register successfully', res.data);
       }
@@ -48,7 +48,7 @@ function App() {
 
   }
   const getImages = async () => {
-    const result = await axios.get('http://127.0.0.1:5001/images');
+    const result = await axios.get('https://rayalaseemauniversity.herokuapp.com/images');
     console.log(result.data);
     setStudentList(result.data)
   }
@@ -77,7 +77,7 @@ function App() {
       {
         studentsList.length> 0 ? studentsList.map(student =>( 
           <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={`http://127.0.0.1:5001/uploads/${student.imageName}`}  />
+      <Card.Img variant="top" src={`https://rayalaseemauniversity.herokuapp.com/uploads/${student.imageName}`}  />
       <Card.Body>
         <Card.Title>{student.name}</Card.Title>
        
