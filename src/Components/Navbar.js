@@ -24,8 +24,8 @@ function Navbars() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/login">Login</Nav.Link>
+                            <Nav.Link href="https://lucky-klepon-d4547b.netlify.app/">Home</Nav.Link>
+                            <Nav.Link href="https://lucky-klepon-d4547b.netlify.app/login">Login</Nav.Link>
 
                         </Nav>
                     </Navbar.Collapse>
