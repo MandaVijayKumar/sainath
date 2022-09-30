@@ -16,36 +16,43 @@ function Login() {
     
   
     return (
-    <Form onSubmit={submitHandler}>
+        <>
+
+    <Form onSubmit={submitHandler} className='bg-primary w-50 m-auto text-center p-5 border-radius'>
+       <h4>College Register Form</h4>
       <Form.Group className="mb-3" >
-        <Form.Label>JNB Code</Form.Label>
+        
         <Form.Control
          type="number"
          placeholder="Enter JNB Code"
          value={data.jnbCode}
          name='jnbCode'
          onChange={(e)=>setData({...data, jnbCode: e.target.value})}
+         required
          />        
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>College Name</Form.Label>
+       
         <Form.Control
          type="text"
           placeholder="Enter College Name"
           value={data.collegeName}
           name = 'collegeName'
           onChange={(e)=>setData({...data, collegeName: e.target.value})}
+          required
 
           
           />        
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Nature of the College</Form.Label>
+       
         <Form.Select
          name='natureOfCollege'
          onChange={natureOfCollegeHandler }
+         required
          
          >
+          <option value=''>select Nature of College</option>
           <option value='UG'>UG</option>
           <option value='PG'>PG</option>
          
@@ -53,12 +60,13 @@ function Login() {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
+       
         <Form.Control
          type="password"
           placeholder="Password"
           value={data.password}
           onChange={(e)=>setData({...data, password:e.target.value})}
+          required
           
           />
       </Form.Group>
@@ -67,6 +75,7 @@ function Login() {
         Submit
       </Button>
     </Form>
+    </>
   );
 }
 
