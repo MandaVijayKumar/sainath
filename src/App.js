@@ -9,8 +9,11 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Navbars from './Components/Navbar';
 import Home from './Pages/Home';
-import Login from './Pages/Login';
+import CdcRegister from './Pages/CdcRegister';
 import {Routes, Route} from 'react-router-dom'
+import OfficialLogin from './Pages/OfficialLogin';
+import CollegeTable from './Components/CollegeTable';
+import CdcEditable from './Components/CdcEditable';
 
 function App() {
  
@@ -19,7 +22,10 @@ function App() {
       <Navbars/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/login' element= {<Login/>} />
+        <Route path='/officialLogin' element= {<OfficialLogin/>} />
+        <Route path='/cdcRegister' element = {<CdcRegister/>} />
+        <Route path='/collegeTable' element = {<CollegeTable/>} />
+        <Route path= '/cdeEditable/:jnbCode' element = {<CdcEditable/>} />
       </Routes>
       
      

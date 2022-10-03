@@ -7,8 +7,8 @@ import image from '../assets/images/th.jfif'
 function Navbars() {
     return (
         <div>
-            <Navbar bg="light" expand="lg" className='p-0'>
-                <Container>
+            <Navbar  expand="lg" className='p-0' style={{backgroundColor:'#D2FBA4', color:'cyan'}}>
+                
 
                     <img
                         src={image}
@@ -16,7 +16,7 @@ function Navbars() {
                         height="30"
                         className=""
                         alt=""
-                        style={{borderRadius: '50%'}}
+                        style={{borderRadius: '50%', margin:'0px 3px'}}
                     />
 
                     <Navbar.Brand href="#home">
@@ -24,12 +24,13 @@ function Navbars() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="">
-                            <Nav.Link href="https://lucky-klepon-d4547b.netlify.app/">Home</Nav.Link>
-                            <Nav.Link href="https://lucky-klepon-d4547b.netlify.app/login">Login</Nav.Link>
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/officialLogin">OfficialLogin</Nav.Link>
+                            {/* <Nav.Link href="/cdcRegister">CdcRegister</Nav.Link> */}
 
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
+                
             </Navbar>
         </div>
     )
