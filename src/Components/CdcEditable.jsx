@@ -46,11 +46,11 @@ function CdcEditable() {
   }, []);
 
   return (
-    <div className=" p-2" >
+    <div className=" p-2"  style={{}}>
       <Form
         onSubmit={submitHandler}
         className="mt-4  w-75 m-auto text-center p-2 "
-        style={{ borderRadius: "10px", backgroundColor:'#f210da' }}
+        style={{ borderRadius: "10px", backgroundColor:'#ffe4e1' }}
       >
         <div className="text-center text-white my-3">
           <h4> College Edit information Form</h4>

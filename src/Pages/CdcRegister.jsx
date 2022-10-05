@@ -33,11 +33,11 @@ function CdcRegister() {
   };
 
   return (
-    <div className=" p-2" >
+    <div className=" p-2"  style={{backgroundColor: '#c0c0c0', height: '100vh'}}>
       <Form
         onSubmit={submitHandler}
         className="mt-4  w-75 m-auto text-center p-2 "
-        style={{ borderRadius: "10px", backgroundColor:'#f210da' }}
+        style={{ borderRadius: "10px", backgroundColor:'#557700' }}
       >
         <div className="text-center text-white my-3">
           <h4>Register College Information Form</h4>
