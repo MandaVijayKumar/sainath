@@ -21,15 +21,24 @@ function CdcRegister() {
   const natureOfCollegeHandler = (e) => {
     setData({ ...data, natureOfCollege: e.target.value });
   };
-  const submitHandler = async (e) => {
+  const submitHandler =  (e) => {
     e.preventDefault();
-    const result = await axios.post('http://127.0.0.1:5000/addColleges', data)
-    console.log('about success', result.data.success)
-    if(result.data.success) navigate('/collegeTable');
-    if(!result.data.success) alert('college submision failed because your college jnbcode is  already exists in database');
+     axios.post('http://127.0.0.1:5000/addColleges', data).then(result => {
+      
+     if(result.data.success){
+        alert('college Register successfull ..!')
+        navigate('/collegeTable');
+
+      } else {
+        alert('college submision failed because your college jnbcode is  already exists in database');
+      }
+     }).catch(error => {
+      alert(' college register failed')
+     })
+   
 
     
-    console.log(result)
+    
   };
 
   return (

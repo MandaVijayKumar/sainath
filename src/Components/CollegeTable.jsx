@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/Button";
-import { useNavigate, Link } from "react-router-dom";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 // import Button from "react-bootstrap/Button";
@@ -69,7 +70,7 @@ function CollegeTable() {
     navigate(`/cdeEditable/${jnbCode}`);
   };
   const viewHandler = (jnbCode) => {
-    navigate(`/viewCollege/${jnbCode}`);
+    navigate(`/cdcViewCollege/${jnbCode}`);
   };
 
   const deleteHandler = async (jnbCode, collegeName) => {
@@ -101,11 +102,73 @@ function CollegeTable() {
   return (
     <div
       className="container-fluid"
-      style={{ backgroundColor: "#ffe4e1", margin: "0px" }}
+      style={{ backgroundColor: "#ffe4e1", paddingTop: "0px" }}
+
     >
+      <div className="row">
+      <div
+          className="col-sm-12 mt-3"
+          style={{ display: "flex", justifyContent: "center", alignItems:'center' }}
+        >
+          <ButtonGroup size='lg'>
+          {/* <div className=""> */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate("/cdcRegister")}
+          >
+            Add College
+          </Button>
+          {/* </div> */}
+          {/* <div className=""> */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate("/addCourseList")}
+          >
+            CourseList
+          </Button>
+          {/* <div> */}
+            <Button variant='primary' size='sm' onClick={() => navigate('/allDataCollege')}>College Full Info</Button>
+          {/* </div> */}
+          {/* </div> */}
+          {/* <div className=""> */}
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handlePrint}
+          >
+            Download to Pdf
+          </Button>
+          {/* </div> */}
+          {/* <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate("/downLoadTable",{state: [...filterData]})}
+          >
+            Download
+          </Button> */}
+          
+         
+          </ButtonGroup>
+          <div className='px-2'>
+          <DownloadTableExcel
+            filename="college table"
+            sheet="AfliatedColleges"
+            currentTableRef={tableRef.current}
+            
+          >
+            <Button variant="primary" size="lg">
+              Download to Excel
+            </Button>
+          </DownloadTableExcel>
+          </div>
+
+        </div>
+      </div>
       <div
         className="row"
-        style={{ display: "flex", justifyContent: "center", margin: "10px" }}
+        style={{ display: "flex", justifyContent: "center"}}
       >
         <div
           className="col-sm-8 my-4"
@@ -171,46 +234,7 @@ function CollegeTable() {
           </Button> */}
           ,
         </div>
-        <div
-          className="col-sm-4 mt-3"
-          style={{ display: "flex", justifyContent: "space-around", alignItems:'flex-start' }}
-        >
-          <div className="">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => navigate("/cdcRegister")}
-          >
-            Add College
-          </Button>
-          </div>
-          <div className="">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handlePrint}
-          >
-            Download to Pdf
-          </Button>
-          </div>
-          {/* <Button
-            variant="primary"
-            size="sm"
-            onClick={() => navigate("/downLoadTable",{state: [...filterData]})}
-          >
-            Download
-          </Button> */}
-          <DownloadTableExcel
-            filename="college table"
-            sheet="AfliatedColleges"
-            currentTableRef={tableRef.current}
-            
-          >
-            <Button variant="primary" size="sm">
-              Download to Excel
-            </Button>
-          </DownloadTableExcel>
-        </div>
+       
       </div>
       <div ref={componentRef}>
    
@@ -242,22 +266,22 @@ function CollegeTable() {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>
-                      <a
-                        href={`/viewCollege/${data.jnbCode}`}
+                      <NavLink
+                        to={`/cdcViewCollege/${data.jnbCode}`}
                         style={{ textDecoration: "none" }}
                       >
                         {" "}
                         {data.jnbCode}
-                      </a>
+                      </NavLink>
                     </td>
                     <td>
-                      <a
-                        href={`/viewCollege/${data.jnbCode}`}
+                      <NavLink 
+                        to={`/cdcViewCollege/${data.jnbCode}`}
                         style={{ textDecoration: "none" }}
                       >
                         {" "}
                         {data.collegeName}
-                      </a>
+                      </NavLink>
                     </td>
 
                     <td>{data.address}</td>

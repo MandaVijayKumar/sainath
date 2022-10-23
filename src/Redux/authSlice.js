@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isCdcLogin: false,
-  isCollegeLogin: false
+  isCollegeLogin: false,
+  dumy:false,
+  isCheck: false,
 }
 export const authSlice = createSlice({
     name: 'authentication',
@@ -15,10 +17,16 @@ export const authSlice = createSlice({
 
       collegeLogin: (state) => {
         state.isCollegeLogin = !state.isCollegeLogin;
+      },
+      collegeDumy: (state) => {
+        state.dumy = !state.dumy;
+      },
+      checkEnable: (state) => {
+        state.isCheck = !state.isCheck;
       }
 
     }
 });
-export const { officialLogin, collegeLogin } = authSlice.actions
+export const { officialLogin, collegeLogin, collegeDumy, checkEnable } = authSlice.actions
 
 export default authSlice.reducer

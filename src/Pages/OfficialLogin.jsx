@@ -1,55 +1,69 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import {useNavigate} from 'react-router-dom'
-import axios from 'axios';
-import {  useDispatch } from 'react-redux'
-import {officialLogin} from '../Redux/authSlice'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { officialLogin } from "../Redux/authSlice";
 
 const OfficialLogin = () => {
-  const [credential, setCredential ] = useState([])
+  const [credential, setCredential] = useState([]);
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-
-  const submitHandler =  (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-     
+
+    var authentication = [];
     
-     var authentication = [];
-    if(credential.length > 0) {
-     authentication = credential.filter((auth) => (auth.email === data.email) && (auth.password === data.password))
-    
+    if (credential.length > 0) {
+      authentication = credential.filter(
+        (auth) => auth.email === data.email && auth.password === data.password
+      );
     }
-    if( authentication.length > 0){
-        dispatch(officialLogin());
-        navigate('/collegeTable')
-    } 
-    if( authentication.length === 0) {
-        
-        alert('login failed');
-        setData({email:'', password: ''})
+
+
+    if (authentication.length > 0) {
+      dispatch(officialLogin());
+      navigate("/collegeTable");
+    }
+    if (authentication.length === 0) {
+      alert("login failed");
+      setData({ email: "", password: "" });
     }
   };
   const getData = () => {
-    axios.get('http://127.0.0.1:5000/credential').then(result => {
-      setCredential(result.data);
-      
-     }).catch(error => console.log('error', error));
-
-  }
+    axios
+      .get("http://127.0.0.1:5000/credential")
+      .then((result) => {
+        setCredential(result.data);
+      })
+      .catch((error) => console.log("error", error));
+  };
   useEffect(() => {
     getData();
   }, []);
   return (
     <>
-      <div className="container-fluid" style={{backgroundColor:'#388e8e', height: '100vh', display: 'flex', justifyContent:'center', alignItems:'center'}}>
+      <div
+        className="container-fluid"
+        style={{
+          backgroundColor: "#388e8e",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Form
           onSubmit={submitHandler}
           className="  m-1 text-center p-1 "
-          style={{ borderRadius: "10px", backgroundColor:'#2f2f4f', width:'80%' }}
+          style={{
+            borderRadius: "10px",
+            backgroundColor: "#2f2f4f",
+            width: "80%",
+          }}
         >
           <h4 className="text-white">Official Login</h4>
           <Form.Group className="mb-3">

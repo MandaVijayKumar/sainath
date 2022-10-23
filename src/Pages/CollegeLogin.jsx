@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { collegeLogin } from "../Redux/authSlice";
+import {motion} from 'framer-motion'
 
 const CollegeLogin = () => {
   const [data, setData] = useState({ jnbCode: "", password: "" });
@@ -17,7 +18,6 @@ const CollegeLogin = () => {
       .post("http://127.0.0.1:5000/collegeLogin", data)
       .then((result) => {
         if (result.data.success) {
-
           dispatch(collegeLogin());
           navigate(`/viewCollege/${data.jnbCode}`);
         } else {
@@ -31,19 +31,22 @@ const CollegeLogin = () => {
         console.log("error", error);
       });
   };
- 
+
   useEffect(() => {}, []);
   return (
     <>
-      <div
+      <motion.div
+      initial = {{y: -300, opacity: 0, scale: 0.5}}
+      animate = {{y: 0, opacity: 1, scale: 1}}
+      transition = {{delay:1, duration: 2, type: 'spring', stiffness:300}}
         className="container-fluid text-center"
         style={{
-            margin: 'auto',
-        //   backgroundColor: "#696969",
-        //   height: "100vh",
+          margin: "auto",
+          //   backgroundColor: "#696969",
+          //   height: "100vh",
           display: "flex",
           justifyContent: "center",
-        //   alignItems: "center",
+          //   alignItems: "center",
         }}
       >
         <Form
@@ -77,11 +80,14 @@ const CollegeLogin = () => {
               required
             />
           </Form.Group>
-          <Button  type="submit" style={{backgroundColor:'#3a5894',fontSize:'16px'}}>
+          <Button
+            type="submit"
+            style={{ backgroundColor: "#3a5894", fontSize: "16px" }}
+          >
             Login
           </Button>
         </Form>
-      </div>
+      </motion.div>
     </>
   );
 };
