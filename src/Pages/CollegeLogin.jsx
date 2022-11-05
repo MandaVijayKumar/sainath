@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { collegeLogin } from "../Redux/authSlice";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
 
 const CollegeLogin = () => {
   const [data, setData] = useState({ jnbCode: "", password: "" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const isChecked = useSelector((state) => state.authentication.isCdcLogin)
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -36,9 +37,9 @@ const CollegeLogin = () => {
   return (
     <>
       <motion.div
-      initial = {{y: -300, opacity: 0, scale: 0.5}}
-      animate = {{y: 0, opacity: 1, scale: 1}}
-      transition = {{delay:1, duration: 2, type: 'spring', stiffness:300}}
+        initial={{ y: -300, opacity: 0, scale: 0.5 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 2, type: "spring", stiffness: 300 }}
         className="container-fluid text-center"
         style={{
           margin: "auto",

@@ -7,13 +7,16 @@ import Table from "react-bootstrap/Table";
 // import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-import { useReactToPrint } from 'react-to-print';
+// import { useReactToPrint } from 'react-to-print';
+import {useSelector} from 'react-redux'
 
 import CollegeTablePdf from "./CollegeTablePdf";
 
 function CollegeTable() {
+  const isCheck = useSelector((state) => state.authentication.isCheck);
   const searchRef = useRef();
   const tableRef = useRef(null);
+  const [enable, setEnable] = useState('true');
   const [category, setCategory] = useState("College name");
   const [collegedata, setCollegeData] = useState([]);
   const [filterData, setFilterData] = useState(collegedata);
@@ -22,10 +25,33 @@ function CollegeTable() {
   const [placeholder, setPlaceholder] = useState("search by college name");
   const navigate = useNavigate();
   const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  console.log('the check', isCheck);
+  console.log('thee enable is', enable)
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  // });
+  const registrationHandler = () => {
+    if(enable ==='true') {
+      axios.post('http://127.0.0.1:5000/setEnable',{registration: false}).then((result) => {
+       if(result.data.success === true) { 
+        alert('registration closed successfully...!')
+        setStatus(!status)
+       } else {
+        alert('registration failed ...!')
+       }
+      }).catch(error =>console.log(error))
+    } else {
+      axios.post('http://127.0.0.1:5000/setEnable',{registration: true}).then((result) => {
+       if(result.data.success === true) { 
+        alert('registration enabled successfully...!')
+        setStatus(!status)
+       } else {
+        alert('registration failed ...!')
+       }
+      }).catch(error =>console.log(error))
 
+    }
+  }
   const searchHandler = (e) => {
     new Promise((res, rej) => {
       setFilter(e.target.value);
@@ -73,17 +99,20 @@ function CollegeTable() {
     navigate(`/cdcViewCollege/${jnbCode}`);
   };
 
-  const deleteHandler = async (jnbCode, collegeName) => {
-    const result = axios.post("http://127.0.0.1:5000/deleteCollege", {
+  const deleteHandler =  (jnbCode, collegeName) => {
+     axios.post("http://127.0.0.1:5000/deleteCollege", {
       jnbCode,
-    });
+    }).then((result) => {
+      if (result.data.success === true) {
+        alert(`${collegeName} with jnbcode ${jnbCode} successfully deleted..!`);
+        setStatus(!status);
+      } else {
+        alert("delete faild");
+      }
 
-    if (result) {
-      alert(`${collegeName} with jnbcode ${jnbCode} successfully deleted..!`);
-      setStatus(true);
-    } else {
-      alert("delete faild");
-    }
+    }).catch(error => console.log(error));
+
+   
   };
 
   const getData = () => {
@@ -98,6 +127,15 @@ function CollegeTable() {
 
   useEffect(() => {
     getData();
+    axios.get('http://127.0.0.1:5000/enable').then((result) => {
+      if(result.data.success === true) {
+        setEnable(result.data.data[0].enable)
+        console.log('enable is ', result.data.data[0].enable
+        )
+      } else {
+        alert('failed to get enable data...!')
+      }
+    }).catch()
   }, [status]);
   return (
     <div
@@ -115,31 +153,41 @@ function CollegeTable() {
           <Button
             variant="primary"
             size="sm"
+            disabled ={isCheck? false: true}
             onClick={() => navigate("/cdcRegister")}
           >
-            Add College
+            Add New College
           </Button>
           {/* </div> */}
           {/* <div className=""> */}
           <Button
             variant="primary"
             size="sm"
+            disabled ={isCheck? false: true}
             onClick={() => navigate("/addCourseList")}
           >
-            CourseList
+            Add New Course
           </Button>
+         { isCheck &&( <Button
+            variant="primary"
+            size="sm"
+           
+            onClick={registrationHandler}
+          >
+           {(enable === 'true')?'Close Registration':'Enable Registration'}
+          </Button>) }
           {/* <div> */}
             <Button variant='primary' size='sm' onClick={() => navigate('/allDataCollege')}>College Full Info</Button>
           {/* </div> */}
           {/* </div> */}
           {/* <div className=""> */}
-          <Button
+          {/* <Button
             variant="primary"
             size="sm"
             onClick={handlePrint}
           >
             Download to Pdf
-          </Button>
+          </Button> */}
           {/* </div> */}
           {/* <Button
             variant="primary"
@@ -151,21 +199,22 @@ function CollegeTable() {
           
          
           </ButtonGroup>
-          <div className='px-2'>
+          
+
+        </div>
+      </div>
+      <div className='px-2 text-end'>
           <DownloadTableExcel
             filename="college table"
             sheet="AfliatedColleges"
             currentTableRef={tableRef.current}
             
           >
-            <Button variant="primary" size="lg">
-              Download to Excel
+            <Button variant="info" size="sm">
+              Export to Excel
             </Button>
           </DownloadTableExcel>
           </div>
-
-        </div>
-      </div>
       <div
         className="row"
         style={{ display: "flex", justifyContent: "center"}}
@@ -236,7 +285,7 @@ function CollegeTable() {
         </div>
        
       </div>
-      <div ref={componentRef}>
+      <div >
    
         <Table
           responsive
@@ -298,6 +347,7 @@ function CollegeTable() {
                     <td>
                       <Button
                         size="sm"
+                        disabled ={isCheck? false: true}
                         onClick={() => editHandler(data.jnbCode)}
                       >
                         edit
@@ -307,6 +357,7 @@ function CollegeTable() {
                       <Button
                         size="sm"
                         variant="danger"
+                        disabled ={isCheck? false: true}
                         onClick={() =>
                           deleteHandler(data.jnbCode, data.collegeName)
                         }

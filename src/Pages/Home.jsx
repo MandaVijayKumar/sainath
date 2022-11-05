@@ -49,121 +49,137 @@ function Home() {
 
   return (
     <div className="container-fluid home">
-    <div className="row">
-      <div className="col-sm-12">
+      <div className="row">
+        <div className="col-sm-12">
+          <div className="row ">
+            <div className="col-sm-4  mx-auto mt-3">
+              {" "}
+              <motion.div
+                className=" mt-2"
+                initial={{ opacity: 0, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 1,
+                  duration: 2,
+                  type: "spring",
+                  stiffness: 200,
+                }}
+              >
+                <img src={vc} alt="" className="img-fluid" />
+              </motion.div>
+              <div className="text-center text-white mt-1">
+                <motion.h5
+                  initial={{ opacity: 0, x: "-100vw" }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: 1,
+                    duration: 3,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  Vice-Chancellor
+                </motion.h5>
+                <motion.h5
+                  initial={{ opacity: 0, x: "100vw" }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: 1,
+                    duration: 3,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                >
+                  PROF. AKEPOGU ANANDA RAO
+                </motion.h5>
+              </div>
+            </div>
+            <div style={{ height: "200px" }}></div>
 
-      
-      <div className="row ">
-        <div className="col-sm-4  mx-auto mt-3">
-          {" "}
-          <motion.div
-            className=" mt-2"
-            initial={{ opacity: 0, y: -100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 1,
-              duration: 2,
-              type: "spring",
-              stiffness: 200,
-            }}
-          >
-            <img src={vc} alt="" className="img-fluid" />
-          </motion.div>
-          <div className="text-center text-white mt-1">
-            <motion.h5
-              initial={{ opacity: 0, x: "-100vw" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 1,
-                duration: 3,
-                type: "spring",
-                stiffness: 100,
+            <div
+              className="text-white text-center"
+              style={{
+                fontSize: "18px",
+                marginTop: "60px",
+                display: "flex",
+                justifyContent: "space-around",
               }}
             >
-              Vice-Chancellor
-            </motion.h5>
-            <motion.h5
-              initial={{ opacity: 0, x: "100vw" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 1,
-                duration: 3,
-                type: "spring",
-                stiffness: 100,
-              }}
-            >
-              PROF. AKEPOGU ANANDA RAO
-            </motion.h5>
+              <motion.span
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 1,
+                  duration: 1.5,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                style={{
+                  borderRadius: "4px",
+                  padding: "3px 6px",
+                  boxShadow: "0px 0px 3px 0px white",
+                  outline: "0px solid white",
+                }}
+              >
+                Colleges : {allData.colleges}{" "}
+              </motion.span>
+              <motion.span
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 1,
+                  duration: 2,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                style={{
+                  borderRadius: "4px",
+                  padding: "3px 6px",
+                  boxShadow: "0px 0px 3px 0px white",
+                  outline: "0px solid white",
+                }}
+              >
+                Courses : {allData.courses}{" "}
+              </motion.span>
+              <motion.span
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 1,
+                  duration: 2.5,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                style={{
+                  borderRadius: "4px",
+                  padding: "3px 6px",
+                  boxShadow: "0px 0px 3px 0px white",
+                  outline: "0px solid white",
+                }}
+              >
+                Faculty : {allData.faculty}{" "}
+              </motion.span>
+              <motion.span
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 1,
+                  duration: 3,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+                style={{
+                  borderRadius: "4px",
+                  padding: "3px 6px",
+                  boxShadow: "0px 0px 3px 0px white",
+                  outline: "0px solid white",
+                }}
+              >
+                Students (2022-2023) : {allData.students}{" "}
+              </motion.span>
+            </div>
           </div>
         </div>
-        <div style={{ height: "200px" }}></div>
-
-        <div
-          className="text-white text-center"
-          style={{
-            fontSize: "18px",
-            marginTop: "60px",
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <motion.span
-            initial={{ x: "-100vw", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              delay: 1,
-              duration: 1.5,
-              type: "spring",
-              stiffness: 100,
-            }}
-            style={{borderRadius:'4px', padding: '3px 6px' , boxShadow:'0px 0px 3px 0px white', outline:'0px solid white'}}
-          >
-            Colleges : {allData.colleges}{" "}
-          </motion.span>
-          <motion.span
-            initial={{ x: "-100vw", opacity: 0}}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              delay: 1,
-              duration: 2,
-              type: "spring",
-              stiffness: 100,
-            }}
-            style={{borderRadius:'4px', padding: '3px 6px' , boxShadow:'0px 0px 3px 0px white', outline:'0px solid white'}}
-          >
-            Courses : {allData.courses}{" "}
-          </motion.span>
-          <motion.span
-            initial={{ x: "-100vw", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              delay: 1,
-              duration: 2.5,
-              type: "spring",
-              stiffness: 100,
-            }}
-            style={{borderRadius:'4px', padding: '3px 6px' , boxShadow:'0px 0px 3px 0px white', outline:'0px solid white'}}
-          >
-            Faculty : {allData.faculty}{" "}
-          </motion.span>
-          <motion.span
-            initial={{ x: "-100vw", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{
-              delay: 1,
-              duration: 3,
-              type: "spring",
-              stiffness: 100,
-            }}
-            style={{borderRadius:'4px', padding: '3px 6px' , boxShadow:'0px 0px 3px 0px white', outline:'0px solid white'}}
-          >
-            Students (2022-2023) : {allData.students}{" "}
-          </motion.span>
-          
-        </div>
-        </div>
-
-    </div>
       </div>
     </div>
   );

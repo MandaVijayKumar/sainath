@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { officialLogin } from "../Redux/authSlice";
+import { officialLogin, checkEnable } from "../Redux/authSlice";
 
 const OfficialLogin = () => {
   const [credential, setCredential] = useState([]);
@@ -16,16 +16,18 @@ const OfficialLogin = () => {
     e.preventDefault();
 
     var authentication = [];
-    
+
     if (credential.length > 0) {
       authentication = credential.filter(
         (auth) => auth.email === data.email && auth.password === data.password
       );
     }
 
-
     if (authentication.length > 0) {
       dispatch(officialLogin());
+      if((authentication[0].email ==='vicechancellor@ruk.com' ) ||(authentication[0].email === 'cdcdean@ruk.com' )) {
+         dispatch(checkEnable({value: true}));
+      }
       navigate("/collegeTable");
     }
     if (authentication.length === 0) {

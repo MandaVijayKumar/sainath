@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CdcRegister() {
   const navigate = useNavigate();
@@ -15,38 +15,40 @@ function CdcRegister() {
     longitude: "",
     latitude: "",
     status: true,
-    eligible: 'pending'
+    eligible: "pending",
   });
 
   const natureOfCollegeHandler = (e) => {
     setData({ ...data, natureOfCollege: e.target.value });
   };
-  const submitHandler =  (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-     axios.post('http://127.0.0.1:5000/addColleges', data).then(result => {
-      
-     if(result.data.success){
-        alert('college Register successfull ..!')
-        navigate('/collegeTable');
-
-      } else {
-        alert('college submision failed because your college jnbcode is  already exists in database');
-      }
-     }).catch(error => {
-      alert(' college register failed')
-     })
-   
-
-    
-    
+    axios
+      .post("http://127.0.0.1:5000/addColleges", data)
+      .then((result) => {
+        if (result.data.success) {
+          alert("college Register successfull ..!");
+          navigate("/collegeTable");
+        } else {
+          alert(
+            "college submision failed because your college jnbcode is  already exists in database"
+          );
+        }
+      })
+      .catch((error) => {
+        alert(" college register failed");
+      });
   };
 
   return (
-    <div className=" p-2"  style={{backgroundColor: '#c0c0c0', height: '100vh'}}>
+    <div
+      className=" p-2"
+      style={{ backgroundColor: "#c0c0c0", height: "100vh" }}
+    >
       <Form
         onSubmit={submitHandler}
         className="mt-4  w-75 m-auto text-center p-2 "
-        style={{ borderRadius: "10px", backgroundColor:'#557700' }}
+        style={{ borderRadius: "10px", backgroundColor: "#557700" }}
       >
         <div className="text-center text-white my-3">
           <h4>Register College Information Form</h4>

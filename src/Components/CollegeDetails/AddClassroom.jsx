@@ -10,6 +10,7 @@ function AddClassroom() {
   const { jnbCode } = useParams();
   const [classImage, setClassImage] = useState("");
   const [classData1, setClassData1] = useState([]);
+  const [uploading, setUploading] = useState(null)
   const [classData, setClassData] = useState({
     jnbCode: jnbCode,
     courseId: "",
@@ -30,27 +31,33 @@ function AddClassroom() {
     };
     console.log(newLabData);
     console.log(classImage);
-    const filterData = courseData.filter(
-      (course) =>
-        course.courseId === classData.courseId &&
-        course.courseName === courseName &&
-        course.medium === classData.medium
-    );
-    console.log("my filter", filterData);
-
+    if (
+      classImage.type.toLowerCase().includes("/jpeg") ||
+      classImage.type.toLowerCase().includes("/jpg") ||
+      classImage.type.toLowerCase().includes("/png") ||
+      classImage.type.toLowerCase().includes("/gif")
+    ) {
+         console.log('yes')
+         const filterData = courseData.filter(
+          (course) =>
+            course.courseId === classData.courseId &&
+            course.courseName === courseName &&
+            course.medium === classData.medium
+        );
+        
     if (filterData.length === 0) {
       alert(
         `failed due to not exits the combination of course id -${classData.courseId}, course name- ${courseName} and medium- ${classData.medium} in your college course list, please enter medium as per course table`
       );
     } else {
       const filterClass = classData1.filter(
-        (class1) => 
+        (class1) =>
           class1.courseId === classData.courseId &&
           class1.courseName === courseName &&
           class1.medium === classData.medium &&
           class1.roomNo === classData.roomNo
       );
-      console.log('my filter ', filterClass);
+      console.log("my filter ", filterClass);
       if (filterClass.length > 0) {
         alert(`alread exits, please enter new classroom details`);
       } else {
@@ -68,13 +75,26 @@ function AddClassroom() {
         formData.append("classImage", classImage);
 
         axios
-          .post("http://127.0.0.1:5000/addClass", formData)
+          .post("http://127.0.0.1:5000/addClass", formData,{
+            onUploadProgress: (dataUpload) => {
+              console.log("upload loaded", dataUpload.loaded);
+              console.log("upload total", dataUpload.total);
+              console.log(typeof dataUpload.total)
+              console.log('percentage',Math.round((Number(dataUpload.loaded) / Number(dataUpload.total)) * 100));
+              setUploading(
+                Math.round((Number(dataUpload.loaded) / Number(dataUpload.total)) * 100)
+              );
+            },
+          })
           .then((result) => {
             if (result.data.success) {
+              
               alert("successfully insert classroom details...!");
+              setUploading(null)
               navigate(`/viewCollege/${jnbCode}`);
             } else {
               if (result.data.success === false) {
+                setUploading(null)
                 alert(`failed:${result.data.error.sqlMessage}`);
               }
             }
@@ -82,6 +102,14 @@ function AddClassroom() {
           .catch((error) => console.log(error));
       }
     }
+
+    } else {
+      console.log('no');
+      alert('please upload class image file extention must be jpeg or jpg or gip or png')
+    }
+   
+    
+
   };
   const courseIdHandler = async (e) => {
     const promise = new Promise((success, failure) => {
@@ -199,11 +227,25 @@ function AddClassroom() {
                 })
               }
             >
-              <option>Course medium</option>
+              <option value="English">Course medium</option>
               <option value="English">English</option>
               <option value="Telugu">Telugu</option>
               <option value="Urdu">Urdu</option>
             </Form.Select>
+            {uploading !== null &&(<div className="contianer">
+        <div className="progress m-2" style={{ height:'30px'}}>
+          <div
+            className="progress-bar progress-bar-striped bg-primary"
+            role="progressbar"
+            style={{width:`${uploading}%`}}
+            aria-valuenow={uploading}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+           <h4 className="text-center text-white">{uploading} % uploading </h4> 
+          </div>
+        </div>
+      </div>)}
 
             <Form.Group className="mb-3">
               <Form.Label>Room No</Form.Label>
@@ -225,7 +267,7 @@ function AddClassroom() {
               <Form.Label>ClassRoom Capacity</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="How many student can sit in classroom at a time"
+                placeholder="How many students can accomidate in classroom."
                 value={classData.capacity}
                 name="capacity"
                 required
@@ -241,7 +283,7 @@ function AddClassroom() {
               <Form.Label>ClassRoom Measurements(square feets)</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="ClassRoom Measurements(square feets)"
+                placeholder="ClassRoom Measurements( in square feets)"
                 value={classData.measurements}
                 name="measurements"
                 required

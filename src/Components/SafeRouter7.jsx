@@ -4,7 +4,7 @@ import { Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 
-function SafeRouter6({children}) {
+function SafeRouter7({children}) {
     const isCollegeLogin = useSelector((state) => state.authentication.isCollegeLogin)
     
     console.log('collegelogin is:', isCollegeLogin);
@@ -15,4 +15,4 @@ function SafeRouter6({children}) {
   
 }
 
-export default SafeRouter6;
+export default SafeRouter7;

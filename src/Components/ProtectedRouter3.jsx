@@ -4,14 +4,14 @@ import { Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 
-function ProtectedRouter1({children}) {
+function ProtectedRouter3({children}) {
     const isLogin = useSelector((state) => state.authentication.isCdcLogin)
     console.log('login is:', isLogin);
-    if(!isLogin)  return <Navigate to ='/' replace />
+    if(!isLogin)  return <Navigate to ='/officialLogin' replace />
     if(isLogin) {
         return children;
     } 
   
 }
 
-export default ProtectedRouter1
+export default ProtectedRouter3

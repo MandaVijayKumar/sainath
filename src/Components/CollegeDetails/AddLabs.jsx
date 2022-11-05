@@ -10,6 +10,7 @@ function AddLabs() {
   const { jnbCode } = useParams();
   const [labImage, setLabImage] = useState("");
   const [labData1, setLabData1] = useState([]);
+  const [uploading, setUploading] = useState(null)
   const [labData, setLabData] = useState({
     jnbCode: jnbCode,
     courseId: "",
@@ -67,24 +68,47 @@ function AddLabs() {
         formData.append("capacity", labData.capacity);
 
         formData.append("labImage", labImage);
-        if (labData.instruments.length <= 1000) {
-          axios
-            .post("http://127.0.0.1:5000/addLabs", formData)
-            .then((result) => {
-              if (result.data.success) {
-                alert("successfully insert lab details...!");
-                navigate(`/viewCollege/${jnbCode}`);
-              } else {
-                if (result.data.success === false) {
-                  alert(`failed:${result.data.error.sqlMessage}`);
+        if (
+          labImage.type.toLowerCase().includes("/jpeg") ||
+          labImage.type.toLowerCase().includes("/jpg") ||
+          labImage.type.toLowerCase().includes("/png") ||
+          labImage.type.toLowerCase().includes("/gif")
+        ) {
+              console.log('yes')
+          if (labData.instruments.length <= 1000) {
+            axios
+              .post("http://127.0.0.1:5000/addLabs", formData, {
+                onUploadProgress: (dataUpload) => {
+                  console.log("upload loaded", dataUpload.loaded);
+                  console.log("upload total", dataUpload.total);
+                  console.log(typeof dataUpload.total)
+                  console.log('percentage',Math.round((Number(dataUpload.loaded) / Number(dataUpload.total)) * 100));
+                  setUploading(
+                    Math.round((Number(dataUpload.loaded) / Number(dataUpload.total)) * 100)
+                  );
+                },
+              })
+              .then((result) => {
+                if (result.data.success) {
+                  alert("successfully insert lab details...!");
+                  setUploading(null)
+                  navigate(`/viewCollege/${jnbCode}`);
+                } else {
+                  if (result.data.success === false) {
+                    setUploading(null)
+                    alert(`failed:${result.data.error}`);
+                  }
                 }
-              }
-            })
-            .catch((error) => console.log(error));
+              })
+              .catch((error) => console.log(error));
+          } else {
+            alert(
+              `failed: pleae enter instruments text area characters less than 1000`
+            );
+          }
         } else {
-          alert(
-            `failed: pleae enter instruments text area characters less than 1000`
-          );
+          console.log("no");
+          alert('please upload lab image file must be extention of jpeg or jpg or gip or png file only')
         }
       }
     }
@@ -201,11 +225,25 @@ function AddLabs() {
                 })
               }
             >
-              <option>Course medium</option>
+              <option value="English">Course medium</option>
               <option value="English">English</option>
               <option value="Telugu">Telugu</option>
               <option value="Urdu">Urdu</option>
             </Form.Select>
+            {uploading !== null &&(<div className="contianer">
+        <div className="progress m-2" style={{ height:'30px'}}>
+          <div
+            className="progress-bar progress-bar-striped bg-primary"
+            role="progressbar"
+            style={{width:`${uploading}%`}}
+            aria-valuenow={uploading}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+           <h4 className="text-center text-white">{uploading} % uploading </h4> 
+          </div>
+        </div>
+      </div>)}
             <Form.Group className="mb-3">
               <Form.Label>Lab Title</Form.Label>
               <Form.Control
@@ -242,7 +280,7 @@ function AddLabs() {
               <Form.Label>Lab Capacity (total number)</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="How many student can do lab at a time"
+                placeholder="How many students can accomidate at lab session"
                 value={labData.capacity}
                 name="capacity"
                 required
@@ -291,14 +329,17 @@ function AddLabs() {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Instruments Description</Form.Label>
+              <Form.Label>
+                Instruments Description ( including physical
+                devices/software/chemicals)
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 name="instruments"
                 value={labData.instruments}
                 required
-                placeholder="Total number of instruments(physical devices/software/chemical/ etc... (lest than 1000 characters)"
+                placeholder="Total number of instruments including physical devices/software/chemical/ etc... ( number of characters must be lest than 1000 characters)"
                 onChange={(e) =>
                   setLabData({
                     ...labData,
@@ -307,6 +348,7 @@ function AddLabs() {
                 }
               />
             </Form.Group>
+           
 
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>

@@ -30,16 +30,27 @@ import AddLabs from "./Components/CollegeDetails/AddLabs";
 import AddClassroom from "./Components/CollegeDetails/AddClassroom";
 import CollegeLoginPage from "./Pages/CollegeLoginPage";
 import AllDataCollege from "./Pages/AllDataCollege";
+import ProtectedRouter3 from "./Components/ProtectedRouter3";
+import ProtectedRouter4 from "./Components/ProtectedRoute4";
+import FacultyDownLoad from "./Pages/FacultyDownLoad";
+import AddBuilding from "./Pages/AddBuilding";
 
 function App() {
   return (
     <div>
       <Navbars />
       <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path="/" element={<Home />} />
         <Route path="/collegeLogin" element={<CollegeLoginPage />} />
         <Route path="/officialLogin" element={<OfficialLogin />} />
-        <Route path='/allDataCollege' element={<AllDataCollege/>} />
+        <Route
+          path="/allDataCollege"
+          element={
+            <ProtectedRouter3>
+              <AllDataCollege />
+            </ProtectedRouter3>
+          }
+        />
         <Route
           path="/cdcRegister"
           element={
@@ -53,6 +64,14 @@ function App() {
           element={
             <ProtectedRouter1>
               <CollegeTable />
+            </ProtectedRouter1>
+          }
+        />
+        <Route
+          path="/facultyDownload"
+          element={
+            <ProtectedRouter1>
+              <FacultyDownLoad />
             </ProtectedRouter1>
           }
         />
@@ -77,18 +96,23 @@ function App() {
           element={
             <SafeRouter6>
               <AddCourse />
-
             </SafeRouter6>
-              
-            
+          }
+        />
+        <Route
+          path="/addBuilding/:jnbCode"
+          element={
+            <SafeRouter6>
+              <AddBuilding/>
+            </SafeRouter6>
           }
         />
         <Route
           path="/addFaculty/:jnbCode"
           element={
-            
+            <SafeRouter6>
               <AddFaculty />
-            
+            </SafeRouter6>
           }
         />
         <Route
@@ -99,12 +123,39 @@ function App() {
             </SafeRouter5>
           }
         />
-        <Route path='/addCourseList' element={<CourseList/>} />
-        <Route path='/courseCollegeEdit/:courseIdCollegeCode' element={<EditCollegeCourses/>} />
-        <Route path='/addLabs/:jnbCode' element={<AddLabs/>} />
-        <Route path='/addClassrooms/:jnbCode' element={<AddClassroom/>} />
-        <Route path='/studentEnroll/:courseIdCollegeCode' element={<StudentEnroll/>} />
-        <Route path="/downLoadTable" element={<DownLoadTable />} />
+        <Route
+          path="/addCourseList"
+          element={
+            <ProtectedRouter4>
+              <CourseList />
+            </ProtectedRouter4>
+          }
+        />
+        <Route
+          path="/courseCollegeEdit/:courseIdCollegeCode"
+          element={<EditCollegeCourses />}
+        />
+        <Route
+          path="/addLabs/:jnbCode"
+          element={
+            <SafeRouter6>
+              <AddLabs />
+            </SafeRouter6>
+          }
+        />
+        <Route
+          path="/addClassrooms/:jnbCode"
+          element={
+            <SafeRouter6>
+              <AddClassroom />
+            </SafeRouter6>
+          }
+        />
+        <Route
+          path="/studentEnroll/:courseIdCollegeCode"
+          element={<StudentEnroll />}
+        />
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   );

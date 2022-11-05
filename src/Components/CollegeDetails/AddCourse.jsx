@@ -9,6 +9,7 @@ function AddCourse() {
   const [courseDataList, setCourseDataList] = useState([]);
   const [courseList, setCourseList ] = useState([]);
   const [courseName, setCourseName ] = useState('');
+  const [courseCategory, setCourseCategory ] = useState('');
   const [status, setStatus ] = useState(false);
   // console.log(jnbCode);
   const [courseData, setCourseData] = useState({
@@ -17,6 +18,8 @@ function AddCourse() {
     collegeCode: jnbCode,
     courseDuration: "",
     medium: "",
+    courseCategory:'',
+
     allotedSeats: "",
     facultyCount:'0',
     labCount:'0',
@@ -33,7 +36,8 @@ function AddCourse() {
     e.preventDefault();
     const newCourseData = {
       ...courseData,
-      courseName: courseName
+      courseName: courseName,
+      courseCategory: courseCategory,
     }
     // console.log('new course data:', newCourseData)
 
@@ -75,6 +79,7 @@ function AddCourse() {
   const courseIdHandler = async (e) => {
     const p = new Promise((success, failure) => {
       setCourseData({...courseData, [e.target.name]: e.target.value});
+
       success(e.target.value)
 
     })
@@ -82,6 +87,7 @@ function AddCourse() {
     const filterCourse = courseList.filter(course => course.courseId === result);
     // console.log('filter course is:', filterCourse[0].courseName);
     setCourseName(filterCourse[0].courseName)
+    setCourseCategory(filterCourse[0].courseCategory)
     
 
     
@@ -176,6 +182,23 @@ function AddCourse() {
               // }
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Course Category</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Course Category"
+              value={courseCategory}
+              name="courseCategory"
+              readOnly
+              required
+              // onChange={(e) =>
+              //   setCourseData({
+              //     ...courseData,
+              //     [e.target.name]: e.target.value.toUpperCase(),
+              //   })
+              // }
+            />
+          </Form.Group>
           <Form.Label> Select Course Duration</Form.Label>
           <Form.Select
             name="courseDuration"
@@ -188,7 +211,7 @@ function AddCourse() {
               })
             }
           >
-            <option> Course Duration</option>
+            <option value="3"> Course Duration</option>
             <option value="3">3 Years</option>
             <option value=" 2">2 Years</option>
             
@@ -207,7 +230,7 @@ function AddCourse() {
               })
             }
           >
-            <option>Medium</option>
+            <option value="English">Medium</option>
             <option value="English">English</option>
             <option value="Telugu">Telugu</option>
             <option value="Urdu">Urdu</option>
